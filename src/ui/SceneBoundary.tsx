@@ -1,0 +1,2 @@
+import {Component,type ReactNode} from 'react';
+export default class SceneBoundary extends Component<{children:ReactNode},{failed:boolean}>{state={failed:false};static getDerivedStateFromError(){return {failed:true}}render(){return this.state.failed?<div className="scene-error" role="alert"><h2>The 3D view could not start.</h2><p>Universe Explorer needs WebGL. Check that hardware acceleration is enabled in your browser.</p><button onClick={()=>location.reload()}>Reload explorer</button></div>:this.props.children}}

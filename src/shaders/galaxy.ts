@@ -1,0 +1,2 @@
+export const galaxyVertex=`attribute vec3 color; varying vec3 vColor; uniform float pointSize; void main(){vColor=color;vec4 mv=modelViewMatrix*vec4(position,1.0);gl_Position=projectionMatrix*mv;gl_PointSize=clamp(pointSize*(12.0/max(1.0,-mv.z)),0.65,7.0);}`;
+export const galaxyFragment=`varying vec3 vColor; uniform float opacity; void main(){float d=length(gl_PointCoord-0.5);if(d>0.5)discard;float alpha=pow(1.0-d*2.0,2.2);gl_FragColor=vec4(vColor,alpha*opacity);}`;

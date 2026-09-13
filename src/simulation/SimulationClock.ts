@@ -1,0 +1,3 @@
+import {useEffect,useRef,useState} from 'react';
+export const MIN_DATE=Date.UTC(1957,0,1),MAX_DATE=Date.UTC(2030,0,1);
+export function useSimulationClock(){const[time,setTime]=useState(Date.now());const[speed,setSpeed]=useState(1);const[paused,setPaused]=useState(true);const[reverse,setReverse]=useState(false);const ref=useRef(time);useEffect(()=>{ref.current=time},[time]);useEffect(()=>{let last=performance.now();const id=setInterval(()=>{const now=performance.now();if(!paused)setTime(t=>Math.max(MIN_DATE,Math.min(MAX_DATE,t+(now-last)*speed*(reverse?-1:1))));last=now},80);return()=>clearInterval(id)},[speed,paused,reverse]);return {time,ref,setTime,speed,setSpeed,paused,setPaused,reverse,setReverse};}

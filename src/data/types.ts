@@ -1,0 +1,3 @@
+import type {Vec3} from './constants';
+export interface Orbit {a:number;e:number;i:number;node:number;peri:number;mean:number;period:number;parent?:string}
+export interface SpaceObject {id:string;name:string;kind:'star'|'planet'|'moon'|'dwarf'|'spacecraft'|'galaxy'|'region';color:string;physicalRadius:number;visualRadius:number;physicalPosition:Vec3;renderPosition:Vec3;description:string;orbit?:Orbit;mass?:string;rotation?:number;moons?:string;aliases?:string[];distance?:number;spectral?:string;luminosity?:string;planetarySystem?:string;diameter?:string;population?:string;group?:string;galaxyType?:string;focusDistance?:number}

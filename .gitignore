@@ -1,0 +1,16 @@
+node_modules/
+dist/
+.cache/
+.pnpm-store/
+.sites-runtime/
+*.tsbuildinfo
+artifacts/
+coverage/
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.zip

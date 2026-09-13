@@ -1,0 +1,6 @@
+import {test} from 'node:test';import assert from 'node:assert/strict';
+import {rebase,lerpLog,scaleLevel} from '../src/rendering/ScaleManager';import {Navigation} from '../src/navigation/CameraController';import {LY,AU} from '../src/data/constants';import {orbitPosition} from '../src/simulation/orbits';import {solarSystem} from '../src/data/solarSystem';
+test('floating origin retains local detail at galactic coordinates',()=>{const o:[number,number,number]=[LY*26000,0,0];const p:[number,number,number]=[o[0]+6371,0,0];assert.ok(Math.abs(rebase(p,o,63710)[0]-1)<.01)});
+test('scale transitions span planetary to intergalactic ranges',()=>{assert.equal(scaleLevel(45000),0);assert.equal(scaleLevel(LY*6e6),6);assert.ok(Math.abs(lerpLog(1,100,.5)-10)<1e-10)});
+test('fly out and back reaches Earth without residual origin error',()=>{const n=new Navigation();n.fly([LY*2e6,0,0],LY*1e6);for(let i=0;i<300;i++)n.tick(.02);n.fly([AU,0,0],45000);for(let i=0;i<300;i++)n.tick(.02);assert.deepEqual(n.origin,[AU,0,0]);assert.equal(n.span,45000)});
+test('Earth repeats its Kepler orbit and has approximately 1 AU radius',()=>{const o=solarSystem.find(b=>b.id==='earth')!.orbit!;const p=orbitPosition(o,0),q=orbitPosition(o,o.period*86400000);assert.ok(Math.hypot(...p)>AU*.98);assert.ok(Math.hypot(...p)<AU*1.02);assert.ok(Math.hypot(...p.map((x,i)=>x-q[i]))<.01)});

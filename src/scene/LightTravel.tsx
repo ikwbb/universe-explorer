@@ -1,0 +1,7 @@
+import {useMemo,useRef} from 'react';
+import {useFrame} from '@react-three/fiber';
+import {BufferGeometry,Float32BufferAttribute,Group,Mesh} from 'three';
+import {positionAt} from '../simulation/positions';
+import {rebase} from '../rendering/ScaleManager';
+import {navigation} from '../navigation/CameraController';
+export function LightTravel({from,to,time,start}:{from:string;to:string;time:number;start?:number}){const ref=useRef<Group>(null!),pulse=useRef<Mesh>(null!);const geometry=useMemo(()=>{const g=new BufferGeometry();g.setAttribute('position',new Float32BufferAttribute(new Float32Array(6),3));return g},[]);useFrame(({clock})=>{const a=positionAt(from,time),b=positionAt(to,time);ref.current.visible=!!a&&!!b;if(!a||!b)return;const x=rebase(a,navigation.origin,navigation.span),y=rebase(b,navigation.origin,navigation.span);const attr=geometry.getAttribute('position');attr.setXYZ(0,...x);attr.setXYZ(1,...y);attr.needsUpdate=true;geometry.computeBoundingSphere();const t=start===undefined?(clock.elapsedTime/8)%2:Math.min(2,(performance.now()-start)/8000);const u=t<=1?t:2-t;pulse.current.visible=t<2;pulse.current.position.set(x[0]+(y[0]-x[0])*u,x[1]+(y[1]-x[1])*u,x[2]+(y[2]-x[2])*u)});return <group ref={ref}><lineLoop geometry={geometry}><lineBasicMaterial color="#86c6ce" transparent opacity={.45}/></lineLoop><mesh ref={pulse}><sphereGeometry args={[.045,16,12]}/><meshBasicMaterial color="#cbffff"/></mesh></group>}
