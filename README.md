@@ -2,6 +2,8 @@
 
 Universe Explorer is an interactive 3D journey from Earth through the Solar System, humanity's deep-space probes, nearby stars, the Milky Way, and the Local Group. Its central idea is scale: every outward step reveals how small the previous view really was.
 
+<img width="1920" height="1076" alt="image" src="https://github.com/user-attachments/assets/837c2c86-a99f-4e35-86ef-79c28ba32f2d" />
+
 Built with React, TypeScript, Three.js, React Three Fiber, Drei, and Vite. The app runs entirely in the browser and includes its spacecraft ephemerides for offline use.
 
 ## Highlights
